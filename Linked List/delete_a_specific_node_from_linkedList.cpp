@@ -38,39 +38,31 @@ void printList(Node *head)
 }
 
 
-Node *deleteLinkedList(Node *head)
-{
-    if(head == NULL)
-    {
-        cout<<"Linked List is already empty !"<<endl;
-    }
-    else
-    {
-        Node *temp = head;
-        while(temp != NULL)
-        {
-            temp = temp->linkPart;
-            free(head);
-            head = temp;
-        }
-    }
-    return head;
-}
+
+
+
+//here we are using double pointer because we wanna store here
+//the address of a pointer variable which stores address of another variable
 
 void DeleteNode(Node **head,int item)
 {
     Node *temp = *head;
     Node *previous = NULL;
 
-    // if head holds item itself
+    //lets check if head node itself holds
+    //the value we wanna delete
     if(temp != NULL and temp->dataPart == item)
     {
-        *head = temp->linkPart;
-        delete temp;
+        *head = temp->linkPart; // change head
+        delete temp; // free old head
         return;
     }
     else
     {
+          //searching for the value to be deleted
+        //and we will keep track of the previous node
+        //for linking the previous node address part to
+        //the next one
         while(temp != NULL and temp->dataPart != item)
         {
             previous = temp;
@@ -78,11 +70,13 @@ void DeleteNode(Node **head,int item)
         }
         if(temp == NULL)
         {
+            //when we cannot find the value
             cout<<"We couldn't found your item in linked list !"<<endl;
             return;
         }
         else
         {
+            // now its time to update link
             previous->linkPart = temp->linkPart;
             delete temp;
         }
@@ -112,7 +106,7 @@ int main()
     int k;
     cout<<"Enter the item you wanna remove from list : "; cin>>k;
     DeleteNode(&head,k);
-    //Node *check = deleteLinkedList(head);
+   
     cout<<"After deleted "<<k<<" \n";
     printList(head);
 
